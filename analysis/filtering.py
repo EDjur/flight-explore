@@ -1,5 +1,7 @@
 from analysis import domain
 from data_requests import sky_client
+from geopy.distance import vincenty
+import json
 
 
 def filter_on_price(quotes, price_cutoff=20):
@@ -41,7 +43,6 @@ def collate_result(quotes, places):
         country = next((place['CountryName'] for place in places if place["PlaceId"] == id), False)
         return country
 
-    print(places)
     result = [
         {
             'iata_code': get_iata_from_id(quote['OutboundLeg']['DestinationId']),
@@ -55,16 +56,42 @@ def collate_result(quotes, places):
     ]
 
     flights = [domain.Flight(flight) for flight in result]
-    print(flights)
 
     return flights
 
 
 def get_flights(start_date, end_date="", price_cutoff=20):
     quotes, places, carriers, currencies = sky_client.request_sky_json()
-    filtered_quotes = filter_on_price(quotes, price_cutoff)
-    result = collate_result(filtered_quotes, places)
+    if price_cutoff:
+        quotes = filter_on_price(quotes, price_cutoff)
+    result = collate_result(quotes, places)
     return result
+
+
+def rank_by_price_distance(flights):
+    for flight in flights:
+        price_per_km = flight.price / flight.distance
+        flight.price_per_km = round(price_per_km * 100, 4)
+
+    # Sort flights by price per km
+    flights = sorted(flights, key=lambda flight: flight.price_per_km)
+    return flights
+
+
+def calculate_distance(flights):
+    with open("airport_data/airports.json", encoding='utf-8') as file:
+        airports = json.load(file)
+    origin_coordinates = (airports['LHR']['latitude'], airports['LHR']['longitude'])
+
+    for flight in flights:
+        try:
+            dest_coordinates = (airports[flight.iata_code]['latitude'], airports[flight.iata_code]['longitude'])
+        except KeyError as e:
+            continue
+        distance = round(vincenty(origin_coordinates, dest_coordinates).kilometers)
+        flight.distance = distance
+
+    return flights
 
 # if __name__ == '__main__':
 #     quotes, places, carriers, currencies = sky_client.request_sky_json()

@@ -21,6 +21,18 @@ def index():
     return render_template('index.html', flights=flights)
 
 
+@app.route('/price-by-distance')
+def price_by_distance():
+    flights = filtering.get_flights(start_date="", price_cutoff=None)
+    flights = filtering.calculate_distance(flights)
+    flights = filtering.rank_by_price_distance(flights)
+
+
+
+
+    return render_template('price-by-distance.html', flights=flights)
+
+
 if __name__ == '__main__':
     print(time.strftime("%A, %d. %B %Y %I:%M:%S %p"))
     app.debug = True
