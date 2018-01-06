@@ -1,5 +1,5 @@
 Flight Explore uses the Skyscanner API to search and rank cheap flights globally from London.
-    Copyright (C) 2016  Elias Djurfeldt
+    Copyright (C) 2018  Elias Djurfeldt
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
