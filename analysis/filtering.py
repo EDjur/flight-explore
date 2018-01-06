@@ -75,6 +75,7 @@ def rank_by_price_distance(flights):
 
     # Sort flights by price per km
     flights = sorted(flights, key=lambda flight: flight.price_per_km)
+    flights = [flight for flight in flights if flight.price_per_km < 2.5]
     return flights
 
 
@@ -92,10 +93,3 @@ def calculate_distance(flights):
         flight.distance = distance
 
     return flights
-
-# if __name__ == '__main__':
-#     quotes, places, carriers, currencies = sky_client.request_sky_json()
-#
-#     result = collate_result(filtered_quotes, places)
-#
-#     print(json.dumps(result, indent=4))

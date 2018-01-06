@@ -10,6 +10,7 @@
     <tr>
         <td>
             <h1 id="message">Take me anywhere... All flights ranked by price per 100 km</h1>
+            <h3>Filtered at < £2.5 per 100 km</h3>
             <h4><a class="btn" href="{{ url_for('index') }}">Filter by price only</a></h4>
               {% for flight in flights %}
                 <p class="description"></p><b><span class="blue">{{ flight.destination }}, {{ flight.country }}</span></b>

@@ -5,7 +5,7 @@ from datetime import datetime
 market = "GB"
 currency = "GBP"
 locale = "en-GB"
-origin_place = "LON"
+origin_place = "LOND"
 destination_place = "anywhere"
 outbound_partial_date = datetime.today().strftime("%Y-%m")  # TODO: Should do 30 days in advance or so...
 inbound_partial_date = ""
