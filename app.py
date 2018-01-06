@@ -1,8 +1,7 @@
-import json
 import os
 import time
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 
 from analysis import filtering
 
@@ -27,13 +26,10 @@ def price_by_distance():
     flights = filtering.calculate_distance(flights)
     flights = filtering.rank_by_price_distance(flights)
 
-
-
-
     return render_template('price-by-distance.html', flights=flights)
 
 
 if __name__ == '__main__':
     print(time.strftime("%A, %d. %B %Y %I:%M:%S %p"))
-    app.debug = True
+    # app.debug = True
     app.run(host=HOST, port=PORT)
