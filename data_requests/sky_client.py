@@ -1,15 +1,16 @@
 import requests
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 
 market = "GB"
 currency = "GBP"
 locale = "en-GB"
-origin_place = "LOND"
+origin_place = "ARN"
 destination_place = "anywhere"
-outbound_partial_date = datetime.today().strftime("%Y-%m")  # TODO: Should do 30 days in advance or so...
-outbound_partial_date = "2018-06"  # temporary
+outbound_partial_date = datetime.today() + timedelta(days=30)  # TODO: Should do 30 days in advance or so...
+outbound_partial_date = outbound_partial_date.strftime("%Y-%m")
+# outbound_partial_date = "2018-08"  # temporary
 inbound_partial_date = ""
 api_key = os.environ.get("SKYSCANNER_API_KEY")  # Get API key from environment
 req_params = [market, currency, locale, origin_place, destination_place, outbound_partial_date, inbound_partial_date,

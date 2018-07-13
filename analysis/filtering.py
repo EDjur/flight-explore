@@ -60,7 +60,7 @@ def collate_result(quotes, places):
     return flights
 
 
-def get_flights(start_date, end_date="", price_cutoff=20):
+def get_flights(start_date, end_date="", price_cutoff=50):
     quotes, places, carriers, currencies = sky_client.request_sky_json()
     if price_cutoff:
         quotes = filter_on_price(quotes, price_cutoff)
@@ -75,14 +75,14 @@ def rank_by_price_distance(flights):
 
     # Sort flights by price per km
     flights = sorted(flights, key=lambda flight: flight.price_per_km)
-    flights = [flight for flight in flights if flight.price_per_km < 2.5]
+    # flights = [flight for flight in flights if flight.price_per_km < 2.5]
     return flights
 
 
 def calculate_distance(flights):
     with open("airport_data/airports.json", encoding='utf-8') as file:
         airports = json.load(file)
-    origin_coordinates = (airports['LHR']['latitude'], airports['LHR']['longitude'])
+    origin_coordinates = (airports['GOT']['latitude'], airports['GOT']['longitude'])
 
     for flight in flights:
         try:
