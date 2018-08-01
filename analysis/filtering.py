@@ -70,6 +70,8 @@ def get_flights(start_date, end_date="", price_cutoff=50):
 
 def rank_by_price_distance(flights):
     for flight in flights:
+        if flight.distance == 0:
+            flight.distance = 1
         price_per_km = flight.price / flight.distance
         flight.price_per_km = round(price_per_km * 100, 4)
 
