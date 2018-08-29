@@ -8,7 +8,7 @@ currency = "GBP"
 locale = "en-GB"
 origin_place = "ARN"
 destination_place = "anywhere"
-outbound_partial_date = datetime.today() + timedelta(days=30)  # TODO: Should do 30 days in advance or so...
+outbound_partial_date = datetime.today() + timedelta(days=60)  # TODO: Should do 30 days in advance or so...
 outbound_partial_date = outbound_partial_date.strftime("%Y-%m")
 # outbound_partial_date = "2018-08"  # temporary
 inbound_partial_date = ""
